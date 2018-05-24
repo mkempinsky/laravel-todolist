@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Todo;
+
 class TodosController extends Controller
 {
     /**
@@ -16,8 +18,12 @@ class TodosController extends Controller
 
     public function index()
     {
-        $todos = Todo::all();
-             
+        //$todos = Todo::all();
+
+        $todos = Todo::orderBy('created_at', 'asc')->get();
+
+        return view('todos.index')->with('todos', $todos);
+
     }
 
     /**
@@ -49,7 +55,9 @@ class TodosController extends Controller
      */
     public function show($id)
     {
-        //
+        $todo = Todo::find($id);
+
+        return view('todos.show')->with('todo', $todo);
     }
 
     /**
